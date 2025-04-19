@@ -1,7 +1,7 @@
-mod numbers;
+mod sieve;
 mod tuple_iter;
 
-use numbers::Numbers;
+use sieve::Sieve;
 use std::{collections::HashMap, env};
 use tuple_iter::TupleIter;
 
@@ -17,12 +17,12 @@ fn main() {
     let k_max: usize = args["--kmax"].parse().unwrap();
     let m: usize = args["--M"].parse().unwrap();
 
-    let num = Numbers::new(2 * k_max.pow(m as u32));
+    let s = Sieve::new(2 * k_max.pow(m as u32));
 
-    for k in TupleIter::new(m, 1, k_max as u64) {
-        let l = k.iter().fold(1, |acc, k_i| numbers::lcm(acc, 2 * *k_i));
+    for k in TupleIter::new(m, 1, k_max) {
+        let l = k.iter().fold(1, |acc, k_i| sieve::lcm(acc, 2 * *k_i));
 
-        let log_2ki_squared: Vec<f64> = k
+        let log2_2ki_squared: Vec<f64> = k
             .iter()
             .map(|k_i| (1.0 + (*k_i as f64).log2()) * (1.0 + (*k_i as f64).log2()))
             .collect();
@@ -33,12 +33,12 @@ fn main() {
 
         print!(
             "  |  {}\n",
-            num.sum_over_divisors(l / 2, |g| num.psi(l, 2 * g) as f64
+            s.sum_over_divisors(l / 2, |g| s.psi(l, 2 * g) as f64
                 / (0..m)
-                    .map(|i| (2 * numbers::gcd(g, k[i]) - 1) as f64 / log_2ki_squared[i])
+                    .map(|i| (2 * sieve::gcd(g, k[i]) - 1) as f64 / log2_2ki_squared[i])
                     .sum::<f64>()
                     .sqrt())
-                / num.phi(l) as f64
+                / s.phi(l) as f64
         )
     }
 }

@@ -63,7 +63,7 @@ impl Numbers {
         assert!(n % g == 0);
 
         if self.prime_divisors[n as usize].len() == 1 {
-            return if n % g == 0 {
+            return if g % self.prime_divisors[n as usize][0].0 == 0 {
                 self.phi[(n / g) as usize]
             } else {
                 self.phi[n as usize] - n / self.prime_divisors[n as usize][0].0
@@ -77,5 +77,19 @@ impl Numbers {
                 self.psi(prime_power, gcd(prime_power, g))
             })
             .product();
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::Numbers;
+
+    #[test]
+    fn test_psi() {
+        let num = Numbers::new(1000);
+        assert_eq!(num.psi(3, 3), 1);
+        assert_eq!(num.psi(4, 1), 0);
+        assert_eq!(num.psi(12, 3), 0);
+        assert_eq!(num.psi(6, 2), 1);
     }
 }

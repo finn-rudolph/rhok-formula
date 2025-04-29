@@ -14,10 +14,15 @@ fn main() {
             (parts[0].to_owned(), parts[1].to_owned())
         })
         .collect();
+
     let k_max: usize = args["--kmax"].parse().unwrap();
     let m: usize = args["--M"].parse().unwrap();
+    let max_lcm = 2 * TupleIter::new(m, 1, k_max)
+        .map(|k| k.iter().fold(1, |acc, k_i| sieve::lcm(acc, *k_i)))
+        .max()
+        .unwrap();
 
-    let s = Sieve::new(2 * k_max.pow(m as u32));
+    let s = Sieve::new(max_lcm);
 
     for k in TupleIter::new(m, 1, k_max) {
         let l = k.iter().fold(1, |acc, k_i| sieve::lcm(acc, 2 * *k_i));

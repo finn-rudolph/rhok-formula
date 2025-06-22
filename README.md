@@ -1,14 +1,26 @@
-# Running time of the parallel rho method
+# Code for my paper _Choosing iteration maps for the parallel Pollard rho method_
 
-This program computes the expected running time of the parallel Pollard rho method. Used in
+arxiv: [[2506.12844]](https://arxiv.org/abs/2506.12844)
 
-## Usage
+This program computes the expected running time of the parallel Pollard rho method using the formula
+
+$$
+\frac 1 {\varphi(\ell)}
+\sum_{d \in (\Z/\ell\Z)^\times}
+\left( \sum_{i = 1}^M
+    \frac {\gcd(d - 1, 2k_i) - 1} {\log_2^2 2k_i}
+\right)^{\!\! -1/2}
+$$
+
+from the paper.
+
+_Usage_
 
 ```bash
 cargo run --release -- --M=[NUMBER OF MACHINES] --kmax=[MAXIMUM K]
 ```
 
-## Example
+_Example_
 
 ```bash
 > cargo run --release -- --M=2 --kmax=3
@@ -20,3 +32,5 @@ cargo run --release -- --M=[NUMBER OF MACHINES] --kmax=[MAXIMUM K]
 2    3      |  1.1134863162263935
 3    3      |  1.3226407151066075
 ```
+
+The numbers must always be interpreted relative to each other; the absolute running time heavily depends on the hardware and implementation details.

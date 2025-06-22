@@ -6,7 +6,7 @@ This program computes the expected running time of the parallel Pollard rho meth
 
 $$
 \frac 1 {\varphi(\ell)}
-\sum_{d \in (\Z/\ell\Z)^\times}
+\sum_{d \in (\mathbb{Z}/\ell\mathbb{Z})^\times}
 \left( \sum_{i = 1}^M
     \frac {\gcd(d - 1, 2k_i) - 1} {\log_2^2 2k_i}
 \right)^{\!\! -1/2}

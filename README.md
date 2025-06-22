@@ -9,7 +9,7 @@ $$
 \sum_{d \in (\mathbb{Z}/\ell\mathbb{Z})^\times}
 \left( \sum_{i = 1}^M
     \frac {\gcd(d - 1, 2k_i) - 1} {\log_2^2 2k_i}
-\right)^{\!\! -1/2}
+\right)^{-1/2}
 $$
 
 from the paper.
